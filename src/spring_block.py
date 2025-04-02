@@ -13,27 +13,27 @@ def solve_ode_euler(step_num):
     返回:
     tuple: 包含时间数组、位置数组和速度数组的元组
     """
-    # TODO: 创建存储位置和速度的数组
+    # 创建存储位置和速度的数组
     position = np.zeros(step_num)
     velocity = np.zeros(step_num)
 
-    # TODO: 计算时间步长
+    # 计算时间步长
     total_time = 10.0  # 总模拟时间
     time_step = total_time / step_num
 
-    # TODO: 设置初始位置和速度
+    # 设置初始位置和速度
     position[0] = 1.0  # 初始位置
     velocity[0] = 0.0  # 初始速度
-    
-    # TODO: 使用欧拉法迭代求解微分方程
+
+    # 使用欧拉法迭代求解微分方程
     for i in range(1, step_num):
         # 计算导数
         derivs = spring_mass_ode_func([position[i-1], velocity[i-1]], 0)
-        
-    # 更新位置和速度
-    position[i] = position[i-1] + derivs[0] * time_step
-    velocity[i] = velocity[i-1] + derivs[1] * time_step
-    # TODO: 生成时间数组
+        # 更新位置和速度
+        position[i] = position[i-1] + derivs[0] * time_step
+        velocity[i] = velocity[i-1] + derivs[1] * time_step
+
+    # 生成时间数组
     time_points = np.linspace(0, total_time, step_num)
 
     return time_points, position, velocity
@@ -50,19 +50,18 @@ def spring_mass_ode_func(state, time):
     返回:
     list: 包含位置和速度的导数的列表
     """
-    # TODO: 从状态中提取位置和速度
+    # 从状态中提取位置和速度
     x, v = state
     
     # 弹簧常数和质量
     k = 1.0
     m = 1.0
     
-    # TODO: 计算位置和速度的导数
+    # 计算位置和速度的导数
     dxdt = v
     dvdt = -k/m * x
     
-
-    return [dxdt, dvdt]  # 替换为正确的返回值
+    return [dxdt, dvdt]
 
 
 def solve_ode_odeint(step_num):
@@ -75,17 +74,17 @@ def solve_ode_odeint(step_num):
     返回:
     tuple: 包含时间数组、位置数组和速度数组的元组
     """
-    # TODO: 设置初始条件
+    # 设置初始条件
     initial_state = [1.0, 0.0]  # [初始位置, 初始速度]
     
-    # TODO: 创建时间点数组
+    # 创建时间点数组
     total_time = 10.0
     time_points = np.linspace(0, total_time, step_num)
     
-    # TODO: 使用 odeint 求解微分方程
-    solution = solution = odeint(spring_mass_ode_func, initial_state, time_points)
+    # 使用 odeint 求解微分方程
+    solution = odeint(spring_mass_ode_func, initial_state, time_points)
     
-    # TODO: 从解中提取位置和速度
+    # 从解中提取位置和速度
     position = solution[:, 0]
     velocity = solution[:, 1]
     
@@ -104,10 +103,10 @@ def plot_ode_solutions(time_euler, position_euler, velocity_euler, time_odeint, 
     position_odeint (np.ndarray): odeint 的位置数组
     velocity_odeint (np.ndarray): odeint 的速度数组
     """
-    # TODO: 创建图形并设置大小
+    # 创建图形并设置大小
     plt.figure(figsize=(12, 6))
     
-    # TODO: 绘制位置对比图
+    # 绘制位置对比图
     plt.subplot(1, 2, 1)
     plt.plot(time_euler, position_euler, label='Euler Method')
     plt.plot(time_odeint, position_odeint, '--', label='ODEINT')
@@ -116,7 +115,7 @@ def plot_ode_solutions(time_euler, position_euler, velocity_euler, time_odeint, 
     plt.title('Position vs Time')
     plt.legend()
     
-    # TODO: 绘制速度对比图
+    # 绘制速度对比图
     plt.subplot(1, 2, 2)
     plt.plot(time_euler, velocity_euler, label='Euler Method')
     plt.plot(time_odeint, velocity_odeint, '--', label='ODEINT')
@@ -125,7 +124,7 @@ def plot_ode_solutions(time_euler, position_euler, velocity_euler, time_odeint, 
     plt.title('Velocity vs Time')
     plt.legend()
     
-    # TODO: 显示图形
+    # 显示图形
     plt.tight_layout()
     plt.show()
 
@@ -133,9 +132,9 @@ def plot_ode_solutions(time_euler, position_euler, velocity_euler, time_odeint, 
 if __name__ == "__main__":
     # 模拟步数
     step_count = 100
-    # TODO: 使用欧拉法求解
+    # 使用欧拉法求解
     time_euler, position_euler, velocity_euler = solve_ode_euler(step_count)
-    # TODO: 使用 odeint 求解
+    # 使用 odeint 求解
     time_odeint, position_odeint, velocity_odeint = solve_ode_odeint(step_count)
-    # TODO: 绘制对比结果
+    # 绘制对比结果
     plot_ode_solutions(time_euler, position_euler, velocity_euler, time_odeint, position_odeint, velocity_odeint)
