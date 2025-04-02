@@ -14,18 +14,24 @@ def solve_ode_euler(step_num):
     tuple: 包含时间数组、位置数组和速度数组的元组
     """
     # TODO: 创建存储位置和速度的数组
-    position = None
-    velocity = None
+    position = np.zeros(step_num)
+    velocity = np.zeros(step_num)
 
     # TODO: 计算时间步长
-    time_step = None
+    total_time = 10.0  # 总模拟时间
+    time_step = total_time / step_num
 
     # TODO: 设置初始位置和速度
+    position[0] = 1.0  # 初始位置
+    velocity[0] = 0.0  # 初始速度
     
     # TODO: 使用欧拉法迭代求解微分方程
+    for i in range(1, step_num):
+        # 计算导数
+        derivs = spring_mass_ode_func([position[i-1], velocity[i-1]], 0)
     
     # TODO: 生成时间数组
-    time_points = None
+    time_points = np.linspace(0, total_time, step_num)
 
     return time_points, position, velocity
 
@@ -42,8 +48,13 @@ def spring_mass_ode_func(state, time):
     list: 包含位置和速度的导数的列表
     """
     # TODO: 从状态中提取位置和速度
+    x, v = state
     
     # TODO: 计算位置和速度的导数
+    dxdt = v
+    dvdt = -k/m * x
+    
+    return [dxdt, dvdt]
     
     return [0, 0]  # 替换为正确的返回值
 
@@ -59,17 +70,18 @@ def solve_ode_odeint(step_num):
     tuple: 包含时间数组、位置数组和速度数组的元组
     """
     # TODO: 设置初始条件
-    initial_state = None
+    initial_state = [1.0, 0.0]  # [初始位置, 初始速度]
     
     # TODO: 创建时间点数组
-    time_points = None
+    total_time = 10.0
+    time_points = np.linspace(0, total_time, step_num)
     
     # TODO: 使用 odeint 求解微分方程
-    solution = None
+    solution = solution = odeint(spring_mass_ode_func, initial_state, time_points)
     
     # TODO: 从解中提取位置和速度
-    position = None
-    velocity = None
+    position = solution[:, 0]
+    velocity = solution[:, 1]
     
     return time_points, position, velocity
 
@@ -87,13 +99,29 @@ def plot_ode_solutions(time_euler, position_euler, velocity_euler, time_odeint, 
     velocity_odeint (np.ndarray): odeint 的速度数组
     """
     # TODO: 创建图形并设置大小
+    plt.figure(figsize=(12, 6))
     
     # TODO: 绘制位置对比图
+    plt.subplot(1, 2, 1)
+    plt.plot(time_euler, position_euler, label='Euler Method')
+    plt.plot(time_odeint, position_odeint, '--', label='ODEINT')
+    plt.xlabel('Time')
+    plt.ylabel('Position')
+    plt.title('Position vs Time')
+    plt.legend()
     
     # TODO: 绘制速度对比图
+    plt.subplot(1, 2, 2)
+    plt.plot(time_euler, velocity_euler, label='Euler Method')
+    plt.plot(time_odeint, velocity_odeint, '--', label='ODEINT')
+    plt.xlabel('Time')
+    plt.ylabel('Velocity')
+    plt.title('Velocity vs Time')
+    plt.legend()
     
     # TODO: 显示图形
-    pass
+    plt.tight_layout()
+    plt.show()
 
 
 if __name__ == "__main__":
