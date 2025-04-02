@@ -27,9 +27,12 @@ def solve_ode_euler(step_num):
     
     # TODO: 使用欧拉法迭代求解微分方程
     for i in range(1, step_num):
-    # 计算导数
-    derivs = spring_mass_ode_func([position[i-1], velocity[i-1]], 0)
-    
+        # 计算导数
+        derivs = spring_mass_ode_func([position[i-1], velocity[i-1]], 0)
+        
+    # 更新位置和速度
+    position[i] = position[i-1] + derivs[0] * time_step
+    velocity[i] = velocity[i-1] + derivs[1] * time_step
     # TODO: 生成时间数组
     time_points = np.linspace(0, total_time, step_num)
 
@@ -50,13 +53,16 @@ def spring_mass_ode_func(state, time):
     # TODO: 从状态中提取位置和速度
     x, v = state
     
+    # 弹簧常数和质量
+    k = 1.0
+    m = 1.0
+    
     # TODO: 计算位置和速度的导数
     dxdt = v
     dvdt = -k/m * x
     
-    return [dxdt, dvdt]
-    
-    return [0, 0]  # 替换为正确的返回值
+
+    return [dxdt, dvdt]  # 替换为正确的返回值
 
 
 def solve_ode_odeint(step_num):
