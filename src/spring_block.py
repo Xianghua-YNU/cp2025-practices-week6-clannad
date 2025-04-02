@@ -27,12 +27,12 @@ def solve_ode_euler(step_num):
 
     # 使用欧拉法迭代求解微分方程
     for i in range(step_num - 1):
-        # 计算当前加速度 (根据 Hooke's law: F = -kx, 这里k=1, m=1)
-        acceleration = -position[i]
+    # 计算当前加速度 (根据 Hooke's law: F = -kx, 这里k=1, m=1)
+    acceleration = -position[i]
         
-        # 更新速度和位置
-        velocity[i+1] = velocity[i] + acceleration * time_step
-        position[i+1] = position[i] + velocity[i] * time_step
+    # 更新速度和位置
+    velocity[i+1] = velocity[i] + acceleration * time_step
+    position[i+1] = position[i] + velocity[i] * time_step
 
     # 生成时间数组
     time_points = np.linspace(0, total_time, step_num)
