@@ -53,9 +53,6 @@ def spring_mass_ode_func(state, time):
     # 从状态中提取位置和速度
     x, v = state
     
-    # 弹簧常数和质量
-    k = 1.0
-    m = 1.0
     
     # 计算位置和速度的导数
     dxdt = v
