@@ -27,8 +27,8 @@ def solve_ode_euler(step_num):
     
     # TODO: 使用欧拉法迭代求解微分方程
     for i in range(1, step_num):
-        # 计算导数
-        derivs = spring_mass_ode_func([position[i-1], velocity[i-1]], 0)
+    # 计算导数
+    derivs = spring_mass_ode_func([position[i-1], velocity[i-1]], 0)
     
     # TODO: 生成时间数组
     time_points = np.linspace(0, total_time, step_num)
