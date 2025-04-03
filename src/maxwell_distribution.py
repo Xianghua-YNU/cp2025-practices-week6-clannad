@@ -17,7 +17,9 @@ def maxwell_distribution(v, vp):
     分布函数f(v)的值
     """
     # 在此实现麦克斯韦分布函数
-    pass
+    coeff = 4 / (np.sqrt(np.pi) * vp**3)
+    exponent = -(v / vp)**2
+    return coeff * v**2 * np.exp(exponent)
 
 def percentage_0_to_vp(vp):
     """
@@ -30,7 +32,8 @@ def percentage_0_to_vp(vp):
     百分比值
     """
     # 在此实现0到vp的积分计算
-    pass
+    result, _ = quad(maxwell_distribution, 0, vp, args=(vp,))
+    return result * 100
 
 def percentage_0_to_3_3vp(vp):
     """
@@ -43,7 +46,8 @@ def percentage_0_to_3_3vp(vp):
     百分比值
     """
     # 在此实现0到3.3vp的积分计算
-    pass
+    result, _ = quad(maxwell_distribution, 0, 3.3*vp, args=(vp,))
+    return result * 100
 
 def percentage_3e4_to_3e8(vp):
     """
@@ -56,7 +60,8 @@ def percentage_3e4_to_3e8(vp):
     百分比值
     """
     # 在此实现3×10^4到3×10^8的积分计算
-    pass
+    result, _ = quad(maxwell_distribution, 3e4, 3e8, args=(vp,))
+    return result * 100
 
 def trapezoidal_rule(f, a, b, n):
     """
@@ -72,7 +77,10 @@ def trapezoidal_rule(f, a, b, n):
     积分近似值
     """
     # 在此实现梯形积分法则
-    pass
+    h = (b - a) / n
+    x = np.linspace(a, b, n+1)
+    y = f(x, vp)
+    return h * (0.5*y[0] + 0.5*y[-1] + np.sum(y[1:-1]))
 
 def compare_methods(task_name, quad_func, trap_func, vp, n_values=[10, 100, 1000]):
     """比较quad和梯形积分法的结果和性能"""

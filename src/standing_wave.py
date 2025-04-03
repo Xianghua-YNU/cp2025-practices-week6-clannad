@@ -14,7 +14,7 @@ def sineWaveZeroPhi(x, t, A, omega, k):
     '''
     # TODO: 实现正弦波函数
     # 提示：使用 np.sin() 函数计算 A * sin(kx - ωt)
-    pass
+    return A * np.sin(k * x - omega * t)
 
 # 创建动画所需的 Figure 和 Axes
 fig = plt.figure()
@@ -34,7 +34,9 @@ def init():
     TODO: 清空所有line的数据并返回lines列表
     '''
     # 提示：使用line.set_data([], [])设置空数据
-    pass
+    for line in lines:
+        line.set_data([], [])
+    return lines
 
 # 创建空间变量x
 x = np.linspace(0, 10, 1000)
@@ -53,20 +55,34 @@ def animate(i):
 
     # TODO: 计算两个方向相反的波
     # 提示：使用sineWaveZeroPhi函数，注意第二个波的omega要取负值
-    y1 = None
-    y2 = None
+    y1 = sineWaveZeroPhi(x, t, A, omega, k)  # 向右传播的波
+    y2 = sineWaveZeroPhi(x, t, A, -omega, k)  # 向左传播的波
 
     # TODO: 计算驻波（两波之和）
-    y3 = None
+    y3 = y1 + y2
 
     # TODO: 更新每个line的数据
     # 提示：使用line.set_data(x, y)设置数据
     # 提示：waveFunctions = [[x, y1], [x, y2], [x, y3]]可以帮助组织数据
+    lines[0].set_data(x, y1)
+    lines[1].set_data(x, y2)
+    lines[2].set_data(x, y3)
 
     return lines
 if __name__ == '__main__':
     # TODO: 创建动画对象并显示
     # 提示：使用animation.FuncAnimation创建动画
     # 提示：使用plt.show()显示动画
-    pass
+    anim = animation.FuncAnimation(
+        fig, 
+        animate, 
+        init_func=init,
+        frames=200, 
+        interval=50, 
+        blit=True
+    )
+    
+    plt.title('Wave Interference: Standing Wave Formation')
+    plt.tight_layout()
+    plt.show()
 
