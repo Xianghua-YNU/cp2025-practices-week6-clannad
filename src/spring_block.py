@@ -13,6 +13,9 @@ def solve_ode_euler(step_num):
     返回:
     tuple: 包含时间数组、位置数组和速度数组的元组
     """
+    t_max = 10.0  # 与欧拉法保持相同模拟时间
+    initial_state = [1.0, 0.0]  # 初始条件与欧拉法一致
+    time_points = np.linspace(0, t_max, step_num + 1)
     # TODO: 创建存储位置和速度的数组
     position = np.zeros(step_num + 1)
     velocity = np.zeros(step_num + 1)
